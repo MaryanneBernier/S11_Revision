@@ -52,14 +52,14 @@ namespace PresseMots.Controllers
                 return NotFound();
             }
 
+
             var tag = await _context.Tags
-            .FirstOrDefaultAsync(m => m.Id == id);
+       .FirstOrDefaultAsync(m => m.Id == id);
 
             if (tag == null)
             {
                 return NotFound();
             }
-
 
             return View(tag);
         }

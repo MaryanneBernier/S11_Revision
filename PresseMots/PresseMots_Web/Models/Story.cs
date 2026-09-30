@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PresseMots.Models
 {
@@ -20,10 +19,10 @@ namespace PresseMots.Models
         public string Title { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [StringLength(1000, MinimumLength = 25)]
         public string Content { get; set; }
 
-        [NotMapped]
-        public virtual IList<StoryTag> StoryTags { get; set; }
+        public virtual IList<StoryTag> StoryTags { get; set; } = new List<StoryTag>();
         public DateTime CreationTime { get; set; }
         public DateTime? LastEditTime { get; set; }
         public DateTime? PublishTime { get; set; }

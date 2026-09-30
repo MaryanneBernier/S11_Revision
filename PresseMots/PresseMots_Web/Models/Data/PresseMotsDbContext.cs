@@ -26,8 +26,6 @@ namespace PresseMots.Models.Data
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<StoryTag>()
-       .HasKey(st => new { st.TagId, st.StoryId });
             #endregion
         }
 

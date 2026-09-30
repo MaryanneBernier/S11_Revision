@@ -1,10 +1,10 @@
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PresseMots.Models;
 using PresseMots.Models.Data;
 using PresseMots.Utility;
+using PresseMots.ViewModels;
+using System.Linq;
 
 namespace PresseMots.Controllers
 {
@@ -24,7 +24,7 @@ namespace PresseMots.Controllers
             // IMP : VOUS N'AVEZ PAS À MODIFIER LE CODE DES LIGNES 25 À 37  
             if (storyId == null) return RedirectToAction("Index", "Stories");
 
-            var story  = _context.Stories.Where(x => x.Id == storyId).FirstOrDefault();
+            var story = _context.Stories.Where(x => x.Id == storyId).FirstOrDefault();
 
             if (story == null) return NotFound();
 
@@ -38,15 +38,19 @@ namespace PresseMots.Controllers
 
             // À FAIRE : Utilisez un VM pour retourner les données de wordCount, storyTitle, shortStory, storyId et comments
 
-            ViewBag.WordCount = wordCount;
-            ViewBag.StoryTitle = title;
-            ViewBag.ShortStory = shortStory;
-            ViewBag.StoryId = storyId;
-            
-            return View(comments);
+            var commentsVM = new CommentsVM
+            {
+                WordCount = wordCount,
+                StoryTitle = title,
+                ShortStory = shortStory,
+                StoryId = storyId.Value,
+                Comments = comments
+            };
+
+            return View(commentsVM);
         }
 
- 
+
         // GET: Comments/Create
         public IActionResult Create(int? storyId)
         {
@@ -63,7 +67,7 @@ namespace PresseMots.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Create([Bind("Id,Email,DisplayName,Content,StoryId")] Comment comment)
+        public IActionResult Create([Bind("Id,Email,DisplayName,Content,StoryId")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -75,9 +79,9 @@ namespace PresseMots.Controllers
         }
 
         // GET: Comments/Edit/5
-        public  IActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
-        
+
 
             var comment = _context.Comments.Find(id);
             if (comment == null)
@@ -92,7 +96,7 @@ namespace PresseMots.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Edit(int id, [Bind("Id,Email,DisplayName,Content,Hidden,StoryId")] Comment comment)
+        public IActionResult Edit(int id, [Bind("Id,Email,DisplayName,Content,Hidden,StoryId")] Comment comment)
         {
             if (id != comment.Id)
             {
@@ -117,15 +121,15 @@ namespace PresseMots.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index),new { storyId=comment.StoryId });
+                return RedirectToAction(nameof(Index), new { storyId = comment.StoryId });
             }
             return View(comment);
         }
 
         // GET: Comments/Delete/5
-        public  IActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-     
+
 
             var comment = _context.Comments.FirstOrDefault(m => m.Id == id);
             if (comment == null)
@@ -139,7 +143,7 @@ namespace PresseMots.Controllers
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public  IActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             var comment = _context.Comments.Find(id);
             comment.Hidden = true;
@@ -149,7 +153,7 @@ namespace PresseMots.Controllers
 
             //utiliser le/les delete que vous avez override.
 
-            return RedirectToAction(nameof(Index), new { storyId=comment.StoryId});
+            return RedirectToAction(nameof(Index), new { storyId = comment.StoryId });
         }
 
         private bool CommentExists(int id)

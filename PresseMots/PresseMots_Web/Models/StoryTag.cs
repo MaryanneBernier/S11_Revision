@@ -2,6 +2,7 @@
 {
     public class StoryTag
     {
+        public int Id { get; set; }
         public int StoryId { get; set; }
         public int TagId { get; set; }
 

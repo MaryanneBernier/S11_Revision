@@ -27,7 +27,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="TagId" />
-        <input type="hidden" asp-for="StoryId" />
+        <input type="hidden" asp-for="Id" />
 
         <input type="submit" value="Supprimer" class="btn btn-danger" /> &nbsp;
           <a asp-action="Index" asp-controller="Stories" asp-route-Id="@Model.StoryId">&laquo; Retour</a>
