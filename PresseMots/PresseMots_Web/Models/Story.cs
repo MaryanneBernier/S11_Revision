@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PresseMots.Models
 {
@@ -26,7 +23,7 @@ namespace PresseMots.Models
         public string Content { get; set; }
 
         [NotMapped]
-        public IList<string> Tags { get; set; } = new List<string>();
+        public virtual IList<StoryTag> StoryTags { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime? LastEditTime { get; set; }
         public DateTime? PublishTime { get; set; }

@@ -1,4 +1,4 @@
-@*@model IEnumerable<PresseMots.Models.Tag>
+@model IEnumerable<PresseMots.Models.Tag>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +6,7 @@
 
 <h1>Les étiquettes</h1>
 
-
+<p><a asp-action="Create">Créer une étiquette</a></p>
 <table class="table">
     <thead>
         <tr>
@@ -31,4 +31,4 @@
 </table>
 <p>
     <a asp-action="Index" asp-controller="Stories">&laquo; Retour aux articles</a>
-</p>*@
+</p>
